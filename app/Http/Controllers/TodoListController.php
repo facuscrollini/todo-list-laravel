@@ -6,6 +6,7 @@ use App\Models\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class TodoListController extends Controller
 {
     //
@@ -14,6 +15,8 @@ class TodoListController extends Controller
         $fields = $request->only("title", "description");
 
         if ($fields) {
+
+            /** @var \App\Models\User $user */
             $user = Auth::user();
 
             $user->todos()->create([
@@ -21,7 +24,7 @@ class TodoListController extends Controller
                 'description'=> $request->input('description'),
                 'completed' => false
             ]);
-
+            
             return view('todo-list');
         }
         return view('todo-list');
