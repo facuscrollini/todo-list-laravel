@@ -12,21 +12,12 @@ class TodoListController extends Controller
     //
     public function todoList(Request $request)
     {
-        $fields = $request->only("title", "description");
-
-        if ($fields) {
-
             /** @var \App\Models\User $user */
             $user = Auth::user();
+            $name = $user->name;
+            $todos = $user->todos;
 
-            $user->todos()->create([
-                'title'=> $request->input('title'),
-                'description'=> $request->input('description'),
-                'completed' => false
-            ]);
             
-            return view('todo-list');
-        }
-        return view('todo-list');
+            return view('todo-list', compact('name', 'todos'));
     }
 }
